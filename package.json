@@ -19,9 +19,14 @@
       "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
     }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "react",
+    "react-bootstrap",
+    "webpack",
+    "express"
+  ],
+  "author": "Dustin Lorenz",
+  "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
