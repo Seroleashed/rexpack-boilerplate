@@ -9,6 +9,7 @@ import CarouselView from "./views/CarouselView";
 import NavbarView from "./views/NavbarView";
 import ModalView from "./views/ModalView";
 import DropdownView from "./views/DropdownView";
+import FooterView from "./views/Footer";
 
 class App extends React.Component {
   constructor(...args) {
@@ -28,9 +29,9 @@ class App extends React.Component {
     // Dropdownmenu Stuff
     this.state = {
       dropdownItems: [
-        { text: "action1", link: "/action1-url" },
-        { text: "action2", link: "/action2-url" },
-        { text: "action3", link: "/action3-url" }
+        { text: "action1", link: "/action1-url", key: 1 },
+        { text: "action2", link: "/action2-url", key: 2 },
+        { text: "action3", link: "/action3-url", key: 3 }
       ]
     };
   }
@@ -49,7 +50,7 @@ class App extends React.Component {
       <div>
         <NavbarView />
         <CarouselView />
-        <Container>
+        <Container className="main-content">
           <LoadingButtonView buttonText="Das ist ein Testbutton" />
           <Button
             variant="primary"
@@ -83,8 +84,8 @@ class App extends React.Component {
             buttonVariant="success"
             items={this.state.dropdownItems}
           />
-          <div className="awful-selfie" />
         </Container>
+        <FooterView />
       </div>
     );
   }

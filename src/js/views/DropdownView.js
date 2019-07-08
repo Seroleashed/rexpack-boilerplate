@@ -20,7 +20,9 @@ class DropdownView extends React.Component {
 
         <Dropdown.Menu>
           {this.state.items.map(item => (
-            <Dropdown.Item href={item.link}>{item.text}</Dropdown.Item>
+            <Dropdown.Item key={item.key} href={item.link}>
+              {item.text}
+            </Dropdown.Item>
           ))}
         </Dropdown.Menu>
       </Dropdown>
