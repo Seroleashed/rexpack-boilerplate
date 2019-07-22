@@ -7,7 +7,7 @@ import FormatterPage from "./pages/FormatterPage";
 class App extends React.Component {
   constructor(...args) {
     super(...args);
-
+    /*
     // Modal Stuff
     this.state = { modalShow: false };
     this.submitModal = this.submitModal.bind(this);
@@ -26,9 +26,9 @@ class App extends React.Component {
         { text: "action2", link: "/action2-url", key: 2 },
         { text: "action3", link: "/action3-url", key: 3 }
       ]
-    };
+    };*/
   }
-
+  /*
   submitModal() {
     this.setState({ modalShow: false });
   }
@@ -36,9 +36,9 @@ class App extends React.Component {
   closeModal() {
     this.setState({ modalShow: false });
   }
-
+*/
   render() {
-    const { showTooltip, target } = this.state;
+    //const { showTooltip, target } = this.state;
     const App = () => (
       <div>
         <Switch>
