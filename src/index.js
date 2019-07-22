@@ -4,8 +4,13 @@ import App from "./js/App";
 import "./css/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./js/libs/holder.min.js";
+
+import { BrowserRouter } from "react-router-dom";
+
 ReactDOM.render(
-  <App />,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById("react-container") // eslint-disable-line no-undef
 );
 // Needed for Hot Module Replacement

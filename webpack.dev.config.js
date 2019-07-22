@@ -63,5 +63,10 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: "all"
+    }
+  }
 };

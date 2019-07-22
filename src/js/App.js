@@ -1,15 +1,8 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Overlay from "react-bootstrap/Overlay";
-import Tooltip from "react-bootstrap/Tooltip";
-import Container from "react-bootstrap/Container";
-import Jumbotron from "react-bootstrap/Jumbotron";
-import LoadingButtonView from "./views/LoadingButtonView";
-import CarouselView from "./views/CarouselView";
-import NavbarView from "./views/NavbarView";
-import ModalView from "./views/ModalView";
-import DropdownView from "./views/DropdownView";
-import FooterView from "./views/Footer";
+import { Switch, Route } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
+import FormatterPage from "./pages/FormatterPage";
 
 class App extends React.Component {
   constructor(...args) {
@@ -46,47 +39,19 @@ class App extends React.Component {
 
   render() {
     const { showTooltip, target } = this.state;
-    return (
+    const App = () => (
       <div>
-        <NavbarView />
-        <CarouselView />
-        <Container className="main-content">
-          <LoadingButtonView buttonText="Das ist ein Testbutton" />
-          <Button
-            variant="primary"
-            onClick={() => this.setState({ modalShow: true })}
-          >
-            Show Modal
-          </Button>
-          <ModalView
-            show={this.state.modalShow}
-            onClose={this.closeModal}
-            onSubmit={this.submitModal}
-            text="Hier ist ein Modal, dass du auch einfach wieder schließen kannst!"
-            headline="Hallo Welt, ich bin ein Modal"
-          />
-          <Button
-            ref={this.attachRef}
-            variant="dark"
-            onClick={() => this.setState({ showTooltip: !showTooltip })}
-          >
-            Show Tooltip
-          </Button>
-          <Overlay target={target} show={showTooltip} placement="right">
-            {props => (
-              <Tooltip id="overlay-example" {...props}>
-                Hier ist eine Erklärung zum Feld/Button/etc.
-              </Tooltip>
-            )}
-          </Overlay>
-          <DropdownView
-            buttonText="Show the Dropdownmenu"
-            buttonVariant="success"
-            items={this.state.dropdownItems}
-          />
-        </Container>
-        <FooterView />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/formatter" component={FormatterPage} />
+        </Switch>
       </div>
+    );
+
+    return (
+      <Switch>
+        <App />
+      </Switch>
     );
   }
 }

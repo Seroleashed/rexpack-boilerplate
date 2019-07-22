@@ -69,5 +69,10 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css"
     })
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: "all"
+    }
+  }
 };

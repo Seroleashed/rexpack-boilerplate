@@ -7,7 +7,7 @@ import config from "../../webpack.dev.config.js";
 
 const app = express(),
   DIST_DIR = __dirname,
-  HTML_FILE = path.join(DIST_DIR, "index.html"),
+  HOME_HTML_FILE = path.join(DIST_DIR, "index.html"),
   compiler = webpack(config);
 
 app.use(
@@ -24,15 +24,8 @@ app.use(
   })
 );
 
-app.get("*", (req, res, next) => {
-  compiler.outputFileSystem.readFile(HTML_FILE, (err, result) => {
-    if (err) {
-      return next(err);
-    }
-    res.set("content-type", "text/html");
-    res.send(result);
-    res.end();
-  });
+app.get("*", (req, res) => {
+  res.sendFile(HOME_HTML_FILE);
 });
 
 const PORT = process.env.PORT ? process.env.PORT : 8080;
