@@ -53,6 +53,14 @@ module.exports = {
         use: [{ loader: "url-loader" }]
       },
       {
+        test: /\.scss$/,
+        use: [
+          "style-loader",
+          "css-loader",
+          "sass-loader" // compiles Sass to CSS, using Node Sass by default
+        ]
+      },
+      {
         // Loads CSS into a file when you import it via Javascript
         // Rules are set in MiniCssExtractPlugin
         test: /\.css$/,
