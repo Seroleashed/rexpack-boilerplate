@@ -1,8 +1,19 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
+function recursiveIssuer(m) {
+  if (m.issuer) {
+    return recursiveIssuer(m.issuer);
+  } else if (m.name) {
+    return m.name;
+  } else {
+    return false;
+  }
+}
+
 module.exports = {
   entry: {
     main: "./src/index.js"
@@ -10,18 +21,31 @@ module.exports = {
   output: {
     path: path.join(__dirname, "dist"),
     publicPath: "/",
-    filename: "[name].js"
+    filename: "[name].js",
+    globalObject: "this"
   },
+  mode: "production",
   target: "web",
+  externals: {
+    fs: "commonjs fs"
+  },
   devtool: "source-map",
-  // Webpack 4 does not have a CSS minifier, although
-  // Webpack 5 will likely come with one
   optimization: {
+    splitChunks: {
+      cacheGroups: {
+        // do the following for each entry point according to https://webpack.js.org/plugins/mini-css-extract-plugin/#minimizing-for-production
+        mainStyles: {
+          name: "main",
+          test: (m, c, entry = "main") =>
+            m.constructor.name === "CssModule" && recursiveIssuer(m) === entry,
+          chunks: "all",
+          enforce: true
+        }
+      }
+    },
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true // set to true if you want JS source maps
+      new TerserPlugin({
+        extractComments: "all"
       }),
       new OptimizeCSSAssetsPlugin({})
     ]
@@ -29,12 +53,24 @@ module.exports = {
   module: {
     rules: [
       {
-        // Transpiles ES6-8 into ES5
+        enforce: "pre",
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
+        loader: "eslint-loader",
+        options: {
+          emitWarning: true,
+          failOnError: false,
+          failOnWarning: false
         }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
+      },
+      {
+        test: /\.worker\.js$/,
+        use: { loader: "worker-loader" }
       },
       {
         // Loads the javacript into html template provided.
@@ -42,29 +78,28 @@ module.exports = {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
-            options: { minimize: true }
+            loader: "html-loader"
+            //options: { minimize: true }
           }
         ]
       },
       {
-        // Loads images into CSS and Javascript files
-        test: /\.jpg$/,
-        use: [{ loader: "url-loader" }]
-      },
-      {
-        test: /\.scss$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
           "style-loader",
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === "development"
+            }
+          },
           "css-loader",
-          "sass-loader" // compiles Sass to CSS, using Node Sass by default
+          "sass-loader"
         ]
       },
       {
-        // Loads CSS into a file when you import it via Javascript
-        // Rules are set in MiniCssExtractPlugin
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
+        test: /\.(png|svg|jpe?g|gif)$/i,
+        use: ["file-loader"]
       }
     ]
   },
@@ -77,10 +112,5 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css"
     })
-  ],
-  optimization: {
-    splitChunks: {
-      chunks: "all"
-    }
-  }
+  ]
 };
