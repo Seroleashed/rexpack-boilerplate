@@ -1,13 +1,13 @@
 {
-  "name": "rexpack-boilerplate",
+  "name": "rexpackstrap-boilerplate",
   "version": "1.0.0",
   "description": "This is a boilerplate with react, express and webpack and react-bootstrap for design stuff. It offers a dev and prod server as well as dev and prod builds and js/css hot reloading for the dev build. The prod build is uglified and minified.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
-    "buildDev": "rmdir dist & webpack --mode development --config webpack.server.config.js & webpack --mode development --config webpack.dev.config.js",
-    "buildProd": "rmdir dist & webpack --mode production --config webpack.server.config.js & webpack --mode production --config webpack.prod.config.js",
+    "buildDev": "rimraf ./dist && mkdirp ./dist && webpack --mode development --config ./webpack.server.config.js && webpack --mode development --config ./webpack.dev.config.js",
+    "buildProd": "rimraf ./dist && mkdirp ./dist && webpack --mode production --config ./webpack.server.config.js && webpack --mode production --config ./webpack.prod.config.js",
     "start": "node ./dist/server.js"
   },
   "jest": {
@@ -28,13 +28,20 @@
   "author": "Dustin Lorenz",
   "license": "MIT",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@fortawesome/fontawesome-svg-core": "^1.2.20",
+    "@fortawesome/free-solid-svg-icons": "^5.10.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
+    "papaparse": "^5.0.1",
     "popper.js": "^1.15.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-beautiful-dnd": "^11.0.5",
     "react-bootstrap": "^1.0.0-beta.9",
+    "react-device-detect": "^1.7.5",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1"
   },
@@ -59,16 +66,20 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
     "mini-css-extract-plugin": "^0.7.0",
+    "mkdirp": "^0.5.1",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "rimraf": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "terser-webpack-plugin": "^1.4.1",
     "uglifyjs-webpack-plugin": "^2.1.3",
     "url-loader": "^2.0.1",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.5",
     "webpack-dev-middleware": "^3.7.0",
     "webpack-hot-middleware": "^2.25.0",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "worker-loader": "^2.0.0"
   }
 }
