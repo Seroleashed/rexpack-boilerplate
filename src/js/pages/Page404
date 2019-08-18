@@ -1,0 +1,34 @@
+import React from "react";
+import Container from "react-bootstrap/Container";
+
+import NavbarView from "../views/NavbarView";
+import FooterView from "../views/Footer";
+
+class Page404 extends React.Component {
+  constructor(...args) {
+    super(...args);
+
+    // Dropdownmenu Stuff
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div>
+        <NavbarView />
+        <CarouselView />
+        <Container className="main-content">
+          <h1>Error 404</h1>
+          <h2>Sorry we didn't find the page you are looking for.</h2>
+          <p>
+            Please go back to our <a href="/">homepage</a> and try again from
+            there
+          </p>
+        </Container>
+        <FooterView />
+      </div>
+    );
+  }
+}
+
+export default Page404;
